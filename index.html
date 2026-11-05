@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Izytest4noob — Les tests fonctionnels simplifiés</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- Menu latéral (devient une barre horizontale sur mobile) -->
+  <aside class="menu">
+    <img class="logo" src="logo.png" alt="Logo Izytest4noob">
+    <nav id="nav">
+      <button data-vue="tableau">Tableau de bord</button>
+      <button data-vue="projets">Projets</button>
+      <button data-vue="cahier">Cahier des charges</button>
+      <button data-vue="fonctionnalites">Fonctionnalités</button>
+      <button data-vue="tests">Scénarios de test</button>
+    </nav>
+    <p class="projet-courant" id="projet-courant"></p>
+  </aside>
+
+  <main>
+    <div class="bandeau" id="bandeau-demo" hidden>Mode démonstration : les données restent dans votre navigateur. Aucune connexion à n8n ni à Airtable.</div>
+    <div class="message" id="message" hidden></div>
+
+    <!-- Page Tableau de bord -->
+    <section class="vue" id="vue-tableau" hidden><h1>Tableau de bord</h1><div id="contenu-tableau"></div></section>
+
+    <!-- Page Fonctionnalités -->
+    <section class="vue" id="vue-fonctionnalites" hidden>
+      <h1>Fonctionnalités</h1>
+      <p class="vide" id="fonct-aucun">Ouvrez d’abord un projet dans la page « Projets ».</p>
+      <div id="zone-fonct" hidden>
+        <details class="carte" id="details-fonct">
+          <summary>Ajouter une fonctionnalité</summary>
+          <form class="grille" id="form-fonct">
+            <input type="hidden" id="f-id">
+            <label>Titre<input id="f-titre" required></label>
+            <label>Priorité<select id="f-prio"><option>Haute</option><option selected>Moyenne</option><option>Basse</option></select></label>
+            <label class="large">Description<textarea id="f-desc" rows="2"></textarea></label>
+            <label class="large">Exigence associée (facultatif)<input id="f-exig"></label>
+            <div class="ligne large">
+              <button class="bouton" type="submit">Enregistrer la fonctionnalité</button>
+              <button class="bouton secondaire" type="button" id="f-annuler">Annuler</button>
+            </div>
+          </form>
+        </details>
+        <div class="ligne">
+          <input id="f-recherche" type="search" placeholder="Rechercher une fonctionnalité par son titre">
+          <select id="f-origine"><option value="">Toutes les origines</option><option>Générée par l'IA</option><option>Ajoutée manuellement</option></select>
+        </div>
+        <div id="liste-fonct"></div>
+      </div>
+    </section>
+
+    <!-- Page Scénarios de test -->
+    <section class="vue" id="vue-tests" hidden>
+      <h1>Scénarios de test</h1>
+      <p class="vide" id="tests-aucun">Ouvrez d’abord un projet dans la page « Projets ».</p>
+      <div id="zone-tests" hidden>
+        <details class="carte" id="details-test">
+          <summary>Ajouter un test</summary>
+          <form class="grille" id="form-test">
+            <label>Fonctionnalité testée<select id="t-form-fonct"></select></label>
+            <label>Titre du test<input id="t-titre" required></label>
+            <label class="large">Scénario (par exemple : cas normal, erreur de saisie)<input id="t-scenario"></label>
+            <label class="large">Étapes à effectuer<textarea id="t-etapes" rows="3"></textarea></label>
+            <label class="large">Résultat attendu<textarea id="t-attendu" rows="2"></textarea></label>
+            <div class="ligne large"><button class="bouton" type="submit">Enregistrer le test</button></div>
+          </form>
+        </details>
+        <div class="ligne">
+          <select id="t-statut">
+            <option value="">Tous les statuts</option>
+            <option value="attention">À corriger : échoués et bloqués</option>
+            <option>À tester</option><option>En cours</option><option>Réussi</option><option>Échoué</option><option>Bloqué</option>
+          </select>
+          <select id="t-fonct"></select>
+        </div>
+        <div id="liste-tests"></div>
+      </div>
+    </section>
+
+    <!-- Page Projets -->
+    <section class="vue" id="vue-projets" hidden>
+      <h1>Projets</h1>
+      <form class="carte grille" id="form-projet">
+        <h2 id="titre-form-projet">Nouveau projet</h2>
+        <input type="hidden" id="p-id">
+        <label>Nom du projet<input id="p-nom" required></label>
+        <label>Statut général
+          <select id="p-statut"><option>À démarrer</option><option>En cours</option><option>Terminé</option></select></label>
+        <label class="large">Description<textarea id="p-desc" rows="2"></textarea></label>
+        <label class="large">URL de l’application à tester (facultatif)<input id="p-url" type="url" placeholder="https://"></label>
+        <div class="ligne large">
+          <button class="bouton" type="submit">Enregistrer le projet</button>
+          <button class="bouton secondaire" type="button" id="p-annuler" hidden>Annuler la modification</button>
+          <button class="bouton danger" type="button" id="p-supprimer" hidden>Terminer projet</button>
+        </div>
+      </form>
+      <div id="liste-projets"></div>
+    </section>
+
+    <!-- Page Cahier des charges -->
+    <section class="vue" id="vue-cahier" hidden>
+      <h1>Cahier des charges</h1>
+      <p class="vide" id="cahier-aucun-projet">Ouvrez d’abord un projet dans la page « Projets ».</p>
+      <div id="cahier-contenu" hidden>
+        <div class="carte">
+          <label for="texte-cdc">Collez ou saisissez le texte de votre cahier des charges</label>
+          <textarea id="texte-cdc" rows="10"></textarea>
+          <div class="ligne">
+            <label class="bouton secondaire" for="fichier-txt">Importer un fichier TXT</label>
+            <input type="file" id="fichier-txt" accept=".txt,text/plain" hidden>
+            <span id="nom-fichier" class="discret"></span>
+          </div>
+          <p class="info">Le texte sera envoyé à un service d’intelligence artificielle pour être analysé. N’y mettez ni mot de passe ni clé secrète.</p>
+          <div class="ligne">
+            <button class="bouton" id="btn-analyser">Analyser avec l’IA</button>
+            <button class="bouton secondaire" type="button" id="btn-passer-etape">Passer cette étape</button>
+          </div>
+        </div>
+        <div id="propositions"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

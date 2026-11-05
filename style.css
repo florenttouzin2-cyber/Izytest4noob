@@ -1,0 +1,88 @@
+/* Izytest4noob — apparence, inspirée de la charte graphique */
+:root{
+  --marine:#14296e; --indigo:#6366f1; --indigo-clair:#eceeff;
+  --vert:#22bf8c; --vert-clair:#e3f6ee; --rouge:#d64550; --rouge-clair:#fdeaec;
+  --fond:#f6f7fb; --texte:#1c2547; --gris:#6b7494; --bord:#e1e5f2; --rayon:14px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:'Plus Jakarta Sans','Segoe UI',system-ui,sans-serif;background:var(--fond);color:var(--texte);line-height:1.5}
+h1{font-size:1.9rem;font-weight:800;color:var(--marine);margin:0 0 18px}
+h2{font-size:1.1rem;color:var(--marine);margin:0 0 10px}
+
+/* Disposition générale : menu à gauche, contenu à droite */
+.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh;min-width:0}
+.app>*{min-width:0}
+main{padding:clamp(12px,3vw,28px);max-width:980px;width:100%;min-width:0;overflow-wrap:anywhere}
+.menu{background:#fff;border-right:1px solid var(--bord);padding:20px 14px;position:sticky;top:0;height:100vh;overflow:auto}
+.logo{width:100%;max-width:170px;display:block;margin:0 auto 14px}
+nav{display:flex;flex-direction:column;gap:4px;min-width:0}
+nav button{text-align:left;border:0;background:none;padding:11px 14px;border-radius:10px;font:inherit;font-weight:600;color:var(--texte);cursor:pointer;min-width:0;white-space:normal;overflow-wrap:anywhere}
+nav button:hover{background:var(--fond)}
+nav button.actif{background:var(--indigo-clair);color:var(--indigo)}
+.projet-courant{margin-top:18px;padding:10px 12px;border-radius:10px;background:var(--vert-clair);font-size:.85rem;overflow-wrap:anywhere}
+
+/* Cartes, formulaires, boutons */
+.carte{background:#fff;border:1px solid var(--bord);border-radius:var(--rayon);padding:clamp(14px,4vw,20px);margin-bottom:16px;min-width:0}
+.grille{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;min-width:0}
+.grille h2,.large{grid-column:1/-1}
+label{display:block;font-weight:600;font-size:.9rem;min-width:0}
+input,select,textarea{width:100%;max-width:100%;min-width:0;margin-top:5px;padding:10px 12px;border:1px solid var(--bord);border-radius:10px;font:inherit;background:#fff}
+select{text-overflow:ellipsis}
+textarea{resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
+.ligne{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0;min-width:0}
+.ligne>*{min-width:0}
+.bouton{display:inline-block;border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:600;background:var(--indigo);color:#fff;cursor:pointer;width:auto;max-width:100%;min-height:44px;margin:0;white-space:normal;overflow-wrap:anywhere}
+.bouton:hover{filter:brightness(.92)}
+.bouton:disabled{opacity:.6;cursor:wait}
+.secondaire{background:var(--indigo-clair);color:var(--indigo)}
+.danger{background:var(--rouge-clair);color:var(--rouge)}
+.valider{background:var(--vert-clair);color:#13805d}
+.petit{padding:6px 12px;font-size:.85rem}
+
+/* Messages et textes d'aide */
+.message{padding:12px 16px;border-radius:10px;margin-bottom:16px;font-weight:600;overflow-wrap:anywhere}
+.message.ok{background:var(--vert-clair);color:#13805d}
+.message.erreur{background:var(--rouge-clair);color:var(--rouge)}
+.bandeau{background:var(--marine);color:#fff;padding:10px 16px;border-radius:10px;margin-bottom:16px;font-size:.9rem;overflow-wrap:anywhere}
+.vide,.discret{color:var(--gris)}
+.info{font-size:.85rem;color:var(--gris);background:var(--fond);padding:10px 12px;border-radius:10px;overflow-wrap:anywhere}
+.badge{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 10px;border-radius:20px;background:var(--indigo-clair);color:var(--indigo)}
+.badge.verif{background:#fff3dc;color:#9a6200}
+
+/* Propositions de l'IA */
+.carte-prop{background:#fff;border:1px solid var(--bord);border-left:5px solid var(--indigo);border-radius:var(--rayon);padding:16px;margin-bottom:14px}
+.tests{margin-top:12px;display:grid;gap:10px}
+.bloc.test{background:var(--fond);border-radius:10px;padding:12px;border-left:4px solid var(--vert)}
+.bloc p{margin:4px 0}
+.bloc .ligne{margin:10px 0 0}
+
+/* Mobile : le menu passe en haut, les formulaires sur une colonne */
+@media (max-width:800px){
+  .app{grid-template-columns:1fr}
+  .menu{position:static;height:auto;border-right:0;border-bottom:1px solid var(--bord);padding:10px}
+  .logo{max-width:90px;margin:0 0 8px}
+  nav{flex-direction:row;flex-wrap:wrap;overflow:visible}
+  nav button{flex:1 1 auto;text-align:center;padding:10px 8px}
+  .grille{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ===== Étape B : tableau de bord, listes, tests ===== */
+summary{cursor:pointer;font-weight:600;color:var(--indigo)}
+details form{margin-top:14px}
+.ligne input,.ligne select{width:auto;max-width:100%;flex:1 1 190px;min-width:0;margin:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(130px,100%),1fr));gap:12px;margin-bottom:16px}
+.stat{background:#fff;border:1px solid var(--bord);border-radius:var(--rayon);padding:14px;border-top:4px solid var(--gris)}
+.stat b{display:block;font-size:1.8rem;color:var(--marine)}
+.stat.vert{border-top-color:var(--vert)} .stat.rouge{border-top-color:var(--rouge)}
+.stat.orange{border-top-color:#f0a040} .stat.indigo{border-top-color:var(--indigo)}
+.taux{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.barre{height:10px;background:var(--bord);border-radius:10px;overflow:hidden;margin-top:8px}
+.barre i{display:block;height:100%;background:var(--vert)}
+.badge.gris{background:var(--bord);color:var(--gris)} .badge.indigo{background:var(--indigo-clair);color:var(--indigo)}
+.badge.vert{background:var(--vert-clair);color:#13805d} .badge.rouge{background:var(--rouge-clair);color:var(--rouge)}
+.badge.orange{background:#fff3dc;color:#9a6200}
+.test-carte.ouvert{border-color:var(--indigo)}
+.capture{width:auto;height:auto;max-width:100%;max-height:320px;border:1px solid var(--bord);border-radius:10px;margin:8px 0}
+@media (max-width:800px){.taux{grid-template-columns:1fr}}
